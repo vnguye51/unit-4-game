@@ -1,0 +1,45 @@
+*{
+    box-sizing: border-box
+}
+
+.Cimage{
+    width: 100px;
+    height: 100px;
+}
+
+#container{
+    border: 8px solid red
+
+}
+
+.col{
+    width: 100px;
+    height: 100px;
+    float: left;
+    border: 1px black solid;
+}
+
+.row{
+    width: 1000px;
+    height: 100px;
+    border-top: 1px black solid;
+    border-bottom: 1px black solid;
+}
+
+#\30\.\30{background-color:blue;
+
+}
+
+.label{
+    background-color: rgba(245, 222, 179, 0.644);
+    z-index: 1;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.character{
+    position: relative;
+}

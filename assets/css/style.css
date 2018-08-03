@@ -8,7 +8,8 @@
 }
 
 #container{
-    border: 8px solid red;
+    background-color: palegoldenrod;
+    border: 8px solid rgba(0, 0, 0, 0.5);
 
 }
 
@@ -20,7 +21,7 @@
 }
 
 .col:hover{
-    background-color:blue;
+    background-color:rgba(18, 141, 150, 0.664);
 }
 
 .row{
@@ -55,4 +56,17 @@
     background-color: tan;
     overflow: hidden;
 
+}
+
+#statbox{
+
+    text-align: center;
+    font-size: 48px;
+    width: 400px;
+    height: 1000px;
+    float: right;
+    background-color: gray;
+    overflow: hidden;
+    
+    
 }

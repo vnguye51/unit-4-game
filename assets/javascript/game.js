@@ -20,6 +20,16 @@ function Character(ref,name,hp,ap,cp,acc,ally,pos) {
             $('#messagebox').prepend('<br>' + this.name + ' dealt ' + this.ap + ' damage to ' + target.name +'. <br>')
             if (target.hp <= 0) {
                 $('#messagebox').prepend('<br>' + target.name + ' falls before ' + this.name +"'s might! <br>" )
+                $(target.ref).empty()
+                phase = 'ChooseOpponent'
+                enemies.splice(enemies.indexOf(target),1)
+                console.log(enemies.length)
+                if (enemies.length == 0){
+                    $('#messagebox').prepend('<br> You have conquered all enemies! <br>')  
+                }
+                else{
+                    $('#messagebox').prepend('<br> Choose your next opponent <br>')
+            }
             }
         }
 
@@ -30,6 +40,12 @@ function Character(ref,name,hp,ap,cp,acc,ally,pos) {
         if ((target.acc > enemyroll) && (target.hp > 0)) {
             this.hp = Math.max(this.hp-target.cp,0)
             $('#messagebox').prepend('<br>' + target.name + ' dealt ' + target.ap + ' damage in retaliation <br>')
+            if (this.hp <= 0) {
+                $('#messagebox').prepend('<br>' + this.name + ' has fallen! <br>'  )
+                $('#messagebox').prepend('<br> Game Over! <br>')
+                $(this.ref).empty()
+                phase = 'GameOver'
+            }
         }
         else if (target.hp > 0){
             $('#messagebox').prepend('<br>' + this.name + ' dodges the retaliation! <br>')
@@ -70,10 +86,10 @@ var phase = 'ChooseCharacter'
 
 
 //Can probably move this section directly into the one below later
-var Lucina = new Character($('#lucina'),'Lucina',100,20,20,50,true, [0,0])
-var Ryoma = new Character($('#ryoma'),'Ryoma',100,20,20,50,true, [1,0])
-var Hector = new Character($('#hector'),'Hector',100,20,20,50,true, [2,0])
-var Lyn = new Character($('#lyn'),'Lyn',100,20,20,50,true, [3,0])
+var Lucina = new Character($('#lucina'),'Lucina',100,20,10,20,false, [0,0])
+var Ryoma = new Character($('#ryoma'),'Ryoma',100,20,10,20,false, [1,0])
+var Hector = new Character($('#hector'),'Hector',100,10,20,20,false, [2,0])
+var Lyn = new Character($('#lyn'),'Lyn',100,20,10,100,false, [3,0])
 
 var enemies = [Lucina, Ryoma, Hector, Lyn]
 var allies = []
@@ -84,12 +100,21 @@ for (var i = 0; i<enemies.length;i++){
     enemies[i].moveto(i,0)
 }
 
+$('.character').hover(function(){ 
+    var player = $(this).data() 
+    $('#statbox').empty()
+    $('#statbox').append('<br>' + player.name + '<br>')
+    $('#statbox').append('<br> HP: ' + player.hp + '<br>')
+    $('#statbox').append('<br> ATP: ' + player.ap + '<br>')
+    $('#statbox').append('<br> %Hit: ' + player.acc + '<br>')
+})
 
 
 $(".character").on('click',function(){
     if (phase === 'ChooseCharacter'){
         player = $(this).data()
         allies.push(enemies.splice(enemies.indexOf(player),1))
+        player.ally = true
         player.moveto(6,5)
         phase = 'ChooseOpponent'
         $('#messagebox').text("Choose your opponent!")
@@ -100,21 +125,26 @@ $(".character").on('click',function(){
     }
             
     else if (phase === 'ChooseOpponent'){
-        phase = 'PlayerSelect'
+        phase = 'TargetSelect'
         target = $(this).data()
         target.moveto(3,5)
+        $('#messagebox').text("Click to attack!")
     }
 
-    else if (phase === 'PlayerSelect'){
-        player = $(this).data()
-        phase = 'TargetSelect'
-    }
+    // else if (phase === 'PlayerSelect'){
+    //     player = $(this).data()
+    //     phase = 'TargetSelect'
+    //     $('#messagebox').text("Click to attack!")
+    // }
 
 
     else if (phase === 'TargetSelect'){
-        phase = 'PlayerSelect'
+        //phase = 'PlayerSelect'
         target = $(this).data()
-        player.attack(target)
+        if (target.ally == false){
+            player.attack(target)
+        }
+        
 
     }
 

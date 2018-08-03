@@ -19,6 +19,10 @@
     border: 1px black solid;
 }
 
+.col:hover{
+    background-color:blue;
+}
+
 .row{
     width: 1000px;
     height: 100px;
@@ -26,9 +30,7 @@
     border-bottom: 1px black solid;
 }
 
-#\30\.\30{background-color:blue;
 
-}
 
 .label{
     background-color: rgba(245, 222, 179, 0.644);
@@ -42,4 +44,15 @@
 
 .character{
     position: relative;
+}
+
+#messagebox{
+    text-align: center;
+    font-size: 48px;
+    width: 400px;
+    height: 1000px;
+    float: right;
+    background-color: tan;
+    overflow: hidden;
+
 }
